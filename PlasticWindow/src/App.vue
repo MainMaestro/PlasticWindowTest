@@ -7,8 +7,8 @@
       </span>
     </div>
     <div class="grid grid-cols-2 gap-3">
-      <div class="bg-white rounded-3xl p-8 items-center flex flex-col">
-        <img src="/Window.png" alt="" />
+      <BgCard class="justify-between">
+        <img src="/Window.png" alt="" class="w-110 self-center" />
         <span class="font-size-lg text-gray-600">
           Окна <strong>Melke Smart Ultra</strong> при ширине профиля в 65 мм
           сохраняют цену, характерную для более легких 60-миллиметровых систем.
@@ -16,261 +16,204 @@
           идеальным выбором для остекления как городских квартир, так и
           загородных домов.
         </span>
-      </div>
+      </BgCard>
 
-      <div>
-        <div class="bg-white rounded-3xl p-8">
+      <div class="grid gap-3">
+        <BgCard>
           <div class="rounded-3xl pb-8 items-top grid grid-cols-2 gap-5">
             <div v-for="(config, index) in windowConfigs" :key="index" class="">
               <label class="block text-sm font-bold text-gray-900 mb-2 ml-1">
                 {{ config.label }}
               </label>
-
-              <Listbox v-model="config.selectedValue">
-                <div class="relative">
-                  <!-- Кнопка селекта -->
-                  <ListboxButton
-                    class="relative w-72 flex items-center cursor-pointer rounded-2xl border-2 border-slate-900 bg-white py-4 pl-4 pr-12 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  >
-                    <span class="block truncate">{{
-                      config.selectedValue
-                    }}</span
-                    ><template
-                      v-for="option in config.options"
-                      :key="option.name"
-                    >
-                      <span
-                        v-if="
-                          option.name === config.selectedValue &&
-                          option.description
-                        "
-                        class="text-sm p-3 rounded-full text-white h-6 ml-2 text-center flex items-center justify-center"
-                        :class="
-                          option.description === 'Хит продаж'
-                            ? 'bg-[#FF00AA]'
-                            : 'bg-blue-300'
-                        "
-                      >
-                        {{ option.description }}
-                      </span>
-                      <span
-                        v-if="option.color && option.name === config.selectedValue"
-                        :style="{ backgroundColor: option.color }"
-                        class="w-5 h-5 rounded-full ml-2"
-                      ></span>
-                    </template>
-
-                    <span
-                      class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4"
-                    >
-                      <!-- Иконка стрелочки -->
-                      <svg
-                        class="h-5 w-5 text-black"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </span>
-                  </ListboxButton>
-                  <span
-                    class="text-xs"
-                    v-if="config.label == 'Покрытие Cool Colours'"
-                    >Melke Smart Ultra / Melke Evolution</span
-                  >
-                  <span
-                    class="text-xs"
-                    v-else-if="config.label == 'Стеклопакет'"
-                    >Climatherm (+всем в стандарте без наценки: тихий,
-                    теплый)</span
-                  >
-
-                  <div
-                    v-if="config.showSides && config.selectedValue !== 'нет'"
-                    class="flex gap-4 mt-3 ml-1"
-                  >
-                    <label class="flex items-center gap-2 cursor-pointer group">
-                      <input
-                        type="checkbox"
-                        v-model="config.sides.inside"
-                        class="w-4 h-4 rounded border-slate-900 text-slate-900 focus:ring-0 cursor-pointer"
-                      />
-                      <span class="text-sm text-gray-600 group-hover:text-black"
-                        >Внутри</span
-                      >
-                    </label>
-
-                    <label class="flex items-center gap-2 cursor-pointer group">
-                      <input
-                        type="checkbox"
-                        v-model="config.sides.outside"
-                        class="w-4 h-4 rounded border-slate-900 text-slate-900 focus:ring-0 cursor-pointer"
-                      />
-                      <span class="text-sm text-gray-600 group-hover:text-black"
-                        >Снаружи</span
-                      >
-                    </label>
-                  </div>
-
-                  <!-- Выпадающее меню -->
-                  <transition
-                    leave-active-class="transition duration-100 ease-in"
-                    leave-from-class="opacity-100"
-                    leave-to-class="opacity-0"
-                  >
-                    <ListboxOptions
-                      class="absolute w-72 mt-2 max-h-60 overflow-auto rounded-2xl bg-white py-2 text-base shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                    >
-                      <ListboxOption
-                        v-for="option in config.options"
-                        :key="option"
-                        :value="option.name"
-                        v-slot="{ active, selected }"
-                      >
-                        <li
-                          class="flex items-center"
-                          :class="[
-                            active ? 'bg-blue-100' : 'bg-white',
-                            'relative cursor-pointer select-none py-2 px-4',
-                          ]"
-                        >
-                          <span
-                            :class="[
-                              selected ? 'font-bold' : 'font-normal',
-                              'block truncate',
-                            ]"
-                          >
-                            {{ option.name }} </span
-                          ><span
-                            v-if="option.description"
-                            class="text-sm p-3 rounded-full text-white h-6 ml-2 text-center flex items-center justify-center"
-                            :class="
-                              option.description == 'Хит продаж'
-                                ? 'bg-[#FF00AA]'
-                                : 'bg-blue-300'
-                            "
-                            >{{ option.description }}</span
-                          >
-                          <span
-                            v-if="option.color"
-                            :style="{ backgroundColor: option.color }"
-                            class="w-4 h-4 rounded-full ml-2"
-                          ></span>
-                        </li>
-                      </ListboxOption>
-                    </ListboxOptions>
-                  </transition>
-                </div>
-              </Listbox>
-            </div>
-            <!--Доп опции-->
-          </div>
-          <div>
-            <h3>Дополнительные опции</h3>
-            <div class="grid grid-cols-2 gap-4 mt-3">
-              <label
-                v-for="extra in extraOptions"
-                :key="extra.name"
-                class="flex items-center gap-3 cursor-pointer group"
-              >
-                <div class="relative flex items-center">
-                  <input
-                    type="checkbox"
-                    v-model="extra.selected"
-                    class="peer h-4 w-4 cursor-pointer appearance-none rounded border transition-all"
-                  />
-                  <!-- Иконка галочки (белая), появляется при выборе -->
-                  <svg
-                    class="absolute h-2.5 w-2.5 bg-white text-black opacity-0 peer-checked:opacity-100 ml-0.5 pointer-events-none"
-                    xmlns="http://w3.org"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </div>
-                <span
-                  class="text-sm font-medium text-gray-700 group-hover:text-black transition-colors"
-                >
-                  {{ extra.name }}
-                </span>
-              </label>
+              <SelectComponent :config="config" />
             </div>
           </div>
-        </div>
+          <ExtraOptions :extraOptions="extraOptions" />
+        </BgCard>
 
-        <!--стоимость-->
-        <div
-          class="p-8 bg-white rounded-3xl mt-4 shadow-sm border border-slate-50"
-        >
+        <BgCard>
           <div class="flex flex-col gap-2">
-            <div class="flex justify-between text-gray-500">
-              <span>:</span>
-              <span class="font-bold text-black">{{ totalPrice }} ₽</span>
+            <div
+              v-if="windowConfigs.find((opt) => opt.label === 'Тип окна')"
+              class="flex justify-between text-gray-500"
+            >
+              <span>{{
+                windowConfigs.find((opt) => opt.label === "Тип окна")
+                  .selectedValue
+              }}</span>
+              <span class="font-bold text-black"
+                >{{ getTypePrice("Тип окна") }} ₽/м2</span
+              >
             </div>
-            <div class="flex justify-between text-gray-500">
+            <div
+              v-if="extraOptions.find((opt) => opt.name === 'Монтаж')?.selected"
+              class="flex justify-between text-gray-500"
+            >
               <span>Монтаж</span>
-              <span class="font-bold text-black">{{ montage }} ₽</span>
+              <span class="font-bold text-black"
+                >{{
+                  extraOptions.find((opt) => opt.name === "Монтаж").price
+                }}
+                ₽</span
+              >
             </div>
-
-            <hr class="my-4" />
+            <div
+              v-if="
+                extraOptions.find(
+                  (opt) => opt.name !== 'Монтаж' && opt.selected,
+                )?.selected
+              "
+              class="flex justify-between text-gray-500"
+            >
+              <span>Аксессуары</span>
+              <span class="font-bold text-black"
+                >{{
+                  extraOptions
+                    .filter((opt) => opt.name !== "Монтаж" && opt.selected)
+                    .reduce((sum, opt) => sum + opt.price, 0)
+                }}
+                ₽</span
+              >
+            </div>
 
             <div class="flex justify-between items-end">
               <span class="text-4xl font-black"
-                >Итого: {{ totalPrice + montage }} ₽</span
+                >Итого: {{ totalPrice }} ₽/м2</span
               >
               <button
-                class="bg-cyan-400 hover:bg-cyan-500 text-white font-bold py-4 px-10 rounded-2xl transition-all shadow-lg shadow-cyan-100"
+                @click="AddToCart"
+                class="bg-cyan-400 text-white font-bold py-4 px-10 rounded-2xl hover:brightness-90 transition shadow-2xl cursor-pointer"
               >
                 Добавить
               </button>
             </div>
           </div>
-        </div>
+        </BgCard>
       </div>
-    </div>
-    <div class="bg-white p-8">
-      <h2>Список окон</h2>
-      <div class="flex">
-        <div>
-          <img class="w-30" src="/Window.png" alt="" />
+      <BgCard class="col-span-2">
+        <h2 class="font-bold text-2xl">Список окон</h2>
+
+        <div v-for="value in cart" :key="value.id">
+          <div class="grid grid-cols-12 items-center">
+            <div class="col-span-2">
+              <img class="w-30 m-4 ml-0" :src="value.photo" alt="" />
+            </div>
+            <div class="flex flex-col text-lg col-span-9 gap-2">
+              <h3 class="font-bold">
+                Melke
+                {{
+                  windowConfigs.find(
+                    (opt) => opt.label === "Профильная система Melke",
+                  ).selectedValue
+                }}
+              </h3>
+
+              <span>
+                {{
+                  value.config.map((c) => `${c.label}: ${c.value}`).join(", ")
+                }}
+                + {{ value.extras.map((e) => e.name).join(", ") }}
+              </span>
+              <span class="font-bold text-2xl"> {{ value.price }}₽/м2 </span>
+            </div>
+            <div class="flex flex-col items-end col-span-1 gap-2">
+              <button
+                class="bg-[#33C5F3] w-12 h-12 p-3 rounded-xl flex justify-center hover:brightness-90 transition cursor-pointer shadow-2xl"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  ></path>
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  ></path>
+                </svg>
+              </button>
+
+              <button
+                @click="DeleteFromCart(value.id)"
+                class="bg-[#FF0000] w-12 h-12 p-3 rounded-xl flex justify-center hover:brightness-90 transition cursor-pointer shadow-2xl"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path
+                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                  ></path>
+                  <line x1="10" y1="11" x2="10" y2="17"></line>
+                  <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <hr />
         </div>
-        <div class="flex flex-col">
-          <h3>Melke Smart Ultra’65</h3>
-          <span
-            >Двухстврочатое окно 1 400х1 400 мм / двухстороннее покрытие Cool
-            Colours Onix / двухкамерный стеклопакет / подоконник 1 500х300 мм /
-            отлив / декоративная раскладка / детская безопасность / откосы /
-            доставка/монтаж</span
-          >
-          {{ totalPrice + montage }}
+        <div class="flex justify-between items-center pt-10">
+          <div class="flex items-center gap-4">
+            <div
+              class="bg-cyan-400 rounded-full w-8 h-8 flex items-center justify-center hover:brightness-90 transition cursor-pointer shadow-2xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 3v13m0 0l-4-4m4 4l4-4" />
+                <path d="M5 21h14" />
+              </svg>
+            </div>
+            <span>Скачать расчёт</span>
+          </div>
+
+          <div class="flex items-center">
+            <div class="font-bold text-2xl mr-8">
+              Итого: {{ cart.reduce((sum, item) => sum + item.price, 0) }} ₽/м2
+            </div>
+            <div>
+              <button
+                class="bg-[#33C5F3] p-4 text-white rounded-2xl font-bold hover:brightness-90 transition cursor-pointer shadow-2xl"
+              >
+                Вызвать замерщика
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <hr />
+      </BgCard>
     </div>
   </div>
 </template>
 
 <script setup>
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from "@headlessui/vue";
 import { ref, computed } from "vue";
+import BgCard from "./components/BgCard.vue";
+import SelectComponent from "./components/SelectComponent.vue";
+import ExtraOptions from "./components/ExtraOptions.vue";
 
-const montage = 8000;
 const windowConfigs = ref([
   {
     label: "Тип окна",
@@ -286,10 +229,11 @@ const windowConfigs = ref([
     label: "Покрытие Cool Colours",
     options: [
       { name: "нет", price: 0 },
-      { name: "Onix", color:"#0A0A0A", price: 2000 },
+      { name: "Onix", color: "#0A0A0A", price: 2000 },
     ],
     selectedValue: "нет",
     showSides: true,
+    sidePrice: 1000,
     sides: { inside: false, outside: false },
   },
   {
@@ -313,6 +257,7 @@ const windowConfigs = ref([
     ],
     selectedValue: "нет",
     showSides: true,
+    sidePrice: 1000,
     sides: { inside: false, outside: false },
   },
   {
@@ -325,13 +270,19 @@ const windowConfigs = ref([
   },
 ]);
 
+const getTypePrice = (label) => {
+  const config = windowConfigs.value.find((c) => c.label === label);
+  if (!config) return 0;
+  const option = config.options.find((o) => o.name === config.selectedValue);
+  return option ? option.price : 0;
+};
 const extraOptions = ref([
   { name: "Подоконник", price: 1500, selected: false },
   { name: "Декоративная раскладка", price: 2000, selected: false },
   { name: "Отлив", price: 800, selected: false },
-  { name: "Монтаж", price: 5000, selected: true },
+  { name: "Монтаж", price: 8000, selected: true },
   { name: "Москитная сетка", price: 1200, selected: false },
-  { name: "Детская безопасность (бесплатно)", price: 700, selected: false },
+  { name: "Детская безопасность (бесплатно)", price: 0, selected: false },
   { name: "Откосы", price: 3000, selected: false },
   { name: "Доставка", price: 1500, selected: true },
 ]);
@@ -341,7 +292,12 @@ const totalPrice = computed(() => {
     const selectedOption = config.options.find(
       (opt) => opt.name === config.selectedValue,
     );
-    return total + (selectedOption ? selectedOption.price : 0);
+    let price = selectedOption ? selectedOption.price : 0;
+    if (config.showSides && config.selectedValue !== "нет") {
+      if (config.sides.inside) price += config.sidePrice;
+      if (config.sides.outside) price += config.sidePrice;
+    }
+    return total + price;
   }, 0);
 
   const extraPrice = extraOptions.value
@@ -350,4 +306,25 @@ const totalPrice = computed(() => {
 
   return selectPrice + extraPrice;
 });
+
+const AddToCart = () => {
+  const newItem = {
+    id: Date.now(),
+    config: windowConfigs.value.map((config) => ({
+      label: config.label,
+      value: config.selectedValue,
+      sides: config.sides,
+    })),
+    extras: extraOptions.value.filter((opt) => opt.selected),
+    price: totalPrice.value,
+    photo: "/Window.png",
+  };
+  cart.value.push(newItem);
+};
+
+const DeleteFromCart = (id) => {
+  cart.value = cart.value.filter((item) => item.id !== id);
+};
+
+const cart = ref([]);
 </script>
