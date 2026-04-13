@@ -1,8 +1,8 @@
 <template>
   <Listbox v-model="config.selectedValue">
-    <div class="relative">
+    <div class="relative ">
       <ListboxButton
-        class="relative w-72 flex items-center cursor-pointer rounded-2xl border-2 border-slate-900 bg-white py-4 pl-4 pr-12 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        class="relative w-full  flex items-center cursor-pointer rounded-2xl border-2 border-slate-900 bg-white py-4 pl-4 pr-12 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
       >
         <span class="block truncate">{{ config.selectedValue }}</span
         ><template v-for="option in config.options" :key="option.name">
@@ -48,7 +48,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute w-72 mt-2 max-h-60 overflow-auto rounded-2xl bg-white py-2 text-base shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+          class="absolute w-full md:w-72 mt-2 max-h-60 overflow-auto rounded-2xl bg-white py-2 text-base shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
         >
           <ListboxOption
             v-for="option in config.options"

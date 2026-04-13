@@ -1,12 +1,14 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto px-4">
     <div class="text-center mb-8 pt-8">
-      <h2 class="text-5xl font-extrabold pb-3">Калькулятор окон</h2>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold pb-3">
+        Калькулятор окон
+      </h2>
       <span class="text-lg text-gray-600">
         Точная цена будет известна после замера на объекте
       </span>
     </div>
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       <BgCard class="justify-between">
         <img src="/Window.png" alt="" class="w-110 self-center" />
         <span class="font-size-lg text-gray-600">
@@ -20,7 +22,9 @@
 
       <div class="grid gap-3">
         <BgCard>
-          <div class="rounded-3xl pb-8 items-top grid grid-cols-2 gap-5">
+          <div
+            class="rounded-3xl pb-8 items-top self-center grid grid-cols-1 xl:grid-cols-2 gap-8"
+          >
             <div v-for="(config, index) in windowConfigs" :key="index" class="">
               <label class="block text-sm font-bold text-gray-900 mb-2 ml-1">
                 {{ config.label }}
@@ -76,13 +80,15 @@
               >
             </div>
 
-            <div class="flex justify-between items-end">
-              <span class="text-4xl font-black"
+            <div
+              class="flex flex-col md:flex-row justify-between md:items-center items-start"
+            >
+              <span class="text-2xl font-black"
                 >Итого: {{ totalPrice }} ₽/м2</span
               >
               <button
                 @click="AddToCart"
-                class="bg-cyan-400 text-white font-bold py-4 px-10 rounded-2xl hover:brightness-90 transition shadow-2xl cursor-pointer"
+                class="bg-cyan-400 text-white w-full md:w-auto font-bold px-5 py-3 rounded-2xl hover:brightness-90 transition shadow-2xl cursor-pointer"
               >
                 Добавить
               </button>
@@ -90,7 +96,7 @@
           </div>
         </BgCard>
       </div>
-      <BgCard class="col-span-2">
+      <BgCard class="col-span-1 md:col-span-2">
         <h2 class="font-bold text-2xl">Список окон</h2>
 
         <div v-for="value in cart" :key="value.id">
@@ -167,7 +173,9 @@
           </div>
           <hr />
         </div>
-        <div class="flex justify-between items-center pt-10">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start gap-4 md:items-center pt-10"
+        >
           <div class="flex items-center gap-4">
             <div
               class="bg-cyan-400 rounded-full w-8 h-8 flex items-center justify-center hover:brightness-90 transition cursor-pointer shadow-2xl"
@@ -190,17 +198,15 @@
             <span>Скачать расчёт</span>
           </div>
 
-          <div class="flex items-center">
-            <div class="font-bold text-2xl mr-8">
+          <div class="flex flex-col md:flex-row gap-4 items-start md:items-center w-full md:w-auto">
+            <div class="font-bold text-2xl mr-8 ">
               Итого: {{ cart.reduce((sum, item) => sum + item.price, 0) }} ₽/м2
             </div>
-            <div>
-              <button
-                class="bg-[#33C5F3] p-4 text-white rounded-2xl font-bold hover:brightness-90 transition cursor-pointer shadow-2xl"
-              >
-                Вызвать замерщика
-              </button>
-            </div>
+            <button
+              class="bg-cyan-400 px-5 w-full md:w-auto py-3 text-white rounded-2xl font-bold hover:brightness-90 transition cursor-pointer shadow-2xl"
+            >
+              Вызвать замерщика
+            </button>
           </div>
         </div>
       </BgCard>
